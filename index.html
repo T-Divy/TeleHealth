@@ -1,61 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>RuralHealth - Telehealth Platform</title>
+
+    <!-- Tailwind & FontAwesome & n8n chat CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .loading-pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.8s ease-in-out;
-        }
-        
-        .slide-up {
-            animation: slideUp 0.6s ease-out;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .loading-pulse { animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+        .fade-in { animation: fadeIn 0.8s ease-in-out; }
+        .slide-up { animation: slideUp 0.6s ease-out; }
+        @keyframes pulse { 0%,100%{opacity:1;}50%{opacity:.5;} }
+        @keyframes fadeIn { from{opacity:0;}to{opacity:1;} }
+        @keyframes slideUp { from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;} }
+        .gradient-bg { background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04); }
     </style>
 </head>
 <body class="bg-gray-50">
+
     <!-- Loading Screen -->
     <div id="loadingScreen" class="fixed inset-0 gradient-bg flex items-center justify-center z-50">
         <div class="text-center text-white">
@@ -74,6 +44,7 @@
 
     <!-- Main Application -->
     <div id="mainApp" class="hidden">
+
         <!-- Navigation -->
         <nav id="navbar" class="bg-white shadow-lg sticky top-0 z-40">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -103,7 +74,7 @@
                     <h1 class="text-5xl font-bold text-white mb-4">Welcome to RuralHealth</h1>
                     <p class="text-xl text-white opacity-90">Choose your role to get started</p>
                 </div>
-                
+
                 <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
                     <!-- Patient Card -->
                     <div class="bg-white rounded-2xl p-8 card-hover cursor-pointer" onclick="showAuth('patient')">
@@ -155,6 +126,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -183,11 +155,11 @@
                     <form id="patientLoginForm" class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <input type="email" required id="patientLoginEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                            <input type="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <input type="password" required id="patientLoginPassword" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
                             Login as Patient
@@ -195,32 +167,32 @@
                     </form>
 
                     <!-- Patient Signup Form -->
-                    <form id="patientSignupForm" class="space-y-4 hidden">
+                    <form id="patientSignupForm" class="space-y-4 hidden" enctype="multipart/form-data">
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                                <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <input type="text" required id="patientFirstName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                                <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <input type="text" required id="patientLastName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <input type="email" required id="patientSignupEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                            <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <input type="tel" required id="patientPhone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-                            <input type="date" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <input type="date" required id="patientDob" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                            <input type="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <input type="password" required id="patientSignupPassword" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
                             Sign Up as Patient
@@ -234,11 +206,11 @@
                     <form id="doctorLoginForm" class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <input type="email" required id="doctorLoginEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                            <input type="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <input type="password" required id="doctorLoginPassword" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         </div>
                         <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors font-medium">
                             Login as Doctor
@@ -246,36 +218,36 @@
                     </form>
 
                     <!-- Doctor Signup Form -->
-                    <form id="doctorSignupForm" class="space-y-4 hidden">
+                    <form id="doctorSignupForm" class="space-y-4 hidden" enctype="multipart/form-data">
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                                <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <input type="text" required id="doctorFirstName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                                <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <input type="text" required id="doctorLastName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                             </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <input type="email" required id="doctorEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                            <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <input type="tel" required id="doctorPhone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Medical License Number</label>
-                            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <input type="text" required id="doctorLicense" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Qualification</label>
-                            <input type="text" required placeholder="e.g., MBBS, MD" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <input type="text" required id="doctorQualification" placeholder="e.g., MBBS, MD" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Specialization</label>
-                            <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <select required id="doctorSpecialization" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                                 <option value="">Select Specialization</option>
                                 <option value="general">General Medicine</option>
                                 <option value="cardiology">Cardiology</option>
@@ -288,19 +260,19 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Consultation Fee (₹)</label>
-                            <input type="number" required min="100" max="5000" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <input type="number" required id="doctorFee" min="100" max="5000" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Years of Experience</label>
-                            <input type="number" required min="0" max="50" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <input type="number" required id="doctorExperience" min="0" max="50" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                            <input type="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <input type="password" required id="doctorPassword" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Upload Medical Certificate</label>
-                            <input type="file" accept=".pdf,.jpg,.jpeg,.png" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <input type="file" accept=".pdf,.jpg,.jpeg,.png" required id="doctorCertificate" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                             <p class="text-xs text-gray-500 mt-1">Upload your medical license or certificate (PDF, JPG, PNG)</p>
                         </div>
                         <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors font-medium">
@@ -551,6 +523,12 @@
                             <input type="tel" name="contact" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
 
+                        <!-- NEW: Email Field -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input type="email" name="email" id="symptomEmail" required placeholder="you@example.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Describe Your Symptoms</label>
                             <textarea name="symptoms" required rows="4" placeholder="Please describe your symptoms in detail..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
@@ -598,7 +576,7 @@
 
                     <!-- Doctor Selection -->
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                        <div class="bg-white rounded-2xl p-6 shadow-lg card-hover cursor-pointer doctor-card" onclick="selectDoctor(1)">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg card-hover cursor-pointer doctor-card" onclick="selectDoctor(1, event)">
                             <div class="text-center mb-4">
                                 <div class="w-20 h-20 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
                                     <i class="fas fa-user-md text-2xl text-blue-600"></i>
@@ -627,7 +605,7 @@
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-2xl p-6 shadow-lg card-hover cursor-pointer doctor-card" onclick="selectDoctor(2)">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg card-hover cursor-pointer doctor-card" onclick="selectDoctor(2, event)">
                             <div class="text-center mb-4">
                                 <div class="w-20 h-20 bg-green-100 rounded-full mx-auto mb-4 flex items-center justify-center">
                                     <i class="fas fa-user-md text-2xl text-green-600"></i>
@@ -656,7 +634,7 @@
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-2xl p-6 shadow-lg card-hover cursor-pointer doctor-card" onclick="selectDoctor(3)">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg card-hover cursor-pointer doctor-card" onclick="selectDoctor(3, event)">
                             <div class="text-center mb-4">
                                 <div class="w-20 h-20 bg-purple-100 rounded-full mx-auto mb-4 flex items-center justify-center">
                                     <i class="fas fa-user-md text-2xl text-purple-600"></i>
@@ -689,7 +667,7 @@
                     <!-- Booking Form -->
                     <div id="bookingForm" class="hidden bg-white rounded-2xl p-8 shadow-xl">
                         <h3 class="text-2xl font-bold text-gray-800 mb-6">Complete Your Booking</h3>
-                        
+
                         <div class="grid md:grid-cols-2 gap-8">
                             <div>
                                 <h4 class="text-lg font-bold text-gray-800 mb-4">Select Date & Time</h4>
@@ -918,16 +896,19 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
+    </div> <!-- end mainApp -->
+
+    <!-- n8n chat import (ES module) and main JS -->
     <script type="module">
         import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-        
+
         let chatInitialized = false;
         let currentUser = null;
         let selectedDoctor = null;
@@ -941,13 +922,13 @@
         function startLoading() {
             const loadingBar = document.getElementById('loadingBar');
             let progress = 0;
-            
+
             const interval = setInterval(() => {
                 progress += Math.random() * 15;
                 if (progress > 100) progress = 100;
-                
+
                 loadingBar.style.width = progress + '%';
-                
+
                 if (progress >= 100) {
                     clearInterval(interval);
                     setTimeout(() => {
@@ -963,12 +944,12 @@
         window.showAuth = function(role) {
             document.getElementById('roleSelection').classList.add('hidden');
             document.getElementById('authSection').classList.remove('hidden');
-            
+
             const authIcon = document.getElementById('authIcon');
             const authTitle = document.getElementById('authTitle');
             const patientForms = document.getElementById('patientForms');
             const doctorForms = document.getElementById('doctorForms');
-            
+
             if (role === 'patient') {
                 authIcon.className = 'fas fa-user text-4xl text-blue-600 mb-4';
                 authTitle.textContent = 'Patient Login';
@@ -993,7 +974,7 @@
             this.classList.remove('text-gray-600');
             document.getElementById('signupTab').classList.remove('bg-white', 'shadow-sm', 'text-blue-600');
             document.getElementById('signupTab').classList.add('text-gray-600');
-            
+
             document.getElementById('patientLoginForm').classList.remove('hidden');
             document.getElementById('patientSignupForm').classList.add('hidden');
             document.getElementById('doctorLoginForm').classList.remove('hidden');
@@ -1005,65 +986,60 @@
             this.classList.remove('text-gray-600');
             document.getElementById('loginTab').classList.remove('bg-white', 'shadow-sm', 'text-blue-600');
             document.getElementById('loginTab').classList.add('text-gray-600');
-            
+
             document.getElementById('patientLoginForm').classList.add('hidden');
             document.getElementById('patientSignupForm').classList.remove('hidden');
             document.getElementById('doctorLoginForm').classList.add('hidden');
             document.getElementById('doctorSignupForm').classList.remove('hidden');
         });
 
-        // Form submissions
+        // Simple demo form handlers (replace with your backend auth)
         document.getElementById('patientLoginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            currentUser = { type: 'patient', name: 'John Doe' };
+            currentUser = { type: 'patient', name: 'John Doe', email: document.getElementById('patientLoginEmail').value || '' };
             showLanguageSelection();
         });
 
         document.getElementById('patientSignupForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            currentUser = { type: 'patient', name: 'John Doe' };
+            currentUser = { type: 'patient', name: (document.getElementById('patientFirstName').value || 'John') + ' ' + (document.getElementById('patientLastName').value || 'Doe') };
             showLanguageSelection();
         });
 
         document.getElementById('doctorLoginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            currentUser = { type: 'doctor', name: 'Dr. Smith' };
+            currentUser = { type: 'doctor', name: 'Dr. Smith', email: document.getElementById('doctorLoginEmail').value || '' };
             showLanguageSelection();
         });
 
         document.getElementById('doctorSignupForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            currentUser = { type: 'doctor', name: 'Dr. Smith' };
+            currentUser = { type: 'doctor', name: (document.getElementById('doctorFirstName').value || 'Dr.') + ' ' + (document.getElementById('doctorLastName').value || 'Smith') };
             showLanguageSelection();
         });
 
-        // Language selection
+        // Language modal
         function showLanguageSelection() {
             document.getElementById('languageModal').classList.remove('hidden');
         }
 
         window.selectLanguage = function(lang) {
-            const langNames = {
-                'en': 'English',
-                'hi': 'हिंदी',
-                'bn': 'বাংলা',
-                'te': 'తెలుగు'
-            };
-            
+            const langNames = { 'en': 'English', 'hi': 'हिंदी', 'bn': 'বাংলা', 'te': 'తెలుగు' };
             document.getElementById('currentLang').textContent = langNames[lang];
             document.getElementById('languageModal').classList.add('hidden');
-            
+
             // Show appropriate dashboard
             document.getElementById('authSection').classList.add('hidden');
             document.getElementById('languageBtn').classList.remove('hidden');
             document.getElementById('logoutBtn').classList.remove('hidden');
-            
+
+            if (!currentUser) currentUser = { type:'patient', name:'Guest' };
             if (currentUser.type === 'patient') {
                 showPatientDashboard();
             } else {
                 showDoctorDashboard();
             }
-            
+
             // Initialize chatbot after login
             if (!chatInitialized) {
                 initializeChatbot();
@@ -1072,9 +1048,13 @@
         };
 
         function initializeChatbot() {
-            createChat({
-                webhookUrl: 'https://n8n.nabhahealth.me/webhook/179bb687-013a-4d2d-819d-4a4032c6e77e/chat'
-            });
+            try {
+                createChat({
+                    webhookUrl: 'https://n8n.nabhahealth.me/webhook/179bb687-013a-4d2d-819d-4a4032c6e77e/chat'
+                });
+            } catch (err) {
+                console.warn('Chat initialization failed:', err);
+            }
         }
 
         // Dashboard navigation
@@ -1108,25 +1088,27 @@
             document.getElementById('bookingForm').classList.add('hidden');
         };
 
-        // Symptom form submission
+        // Symptom form submission (includes email)
         document.getElementById('symptomForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const formData = new FormData(this);
             const data = Object.fromEntries(formData);
-            
+
+            // Validate email rudimentarily
+            if (!data.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
             try {
-                // Send to n8n webhook
                 const response = await fetch('https://n8n.nabhahealth.me/webhook-test/website-form', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
-                
+
                 if (response.ok) {
-                    // Show success message and redirect to appointment booking
                     alert('Symptoms analyzed successfully! Redirecting to book appointment...');
                     showAppointmentBooking();
                 } else {
@@ -1144,31 +1126,37 @@
         };
 
         // Doctor selection
-        window.selectDoctor = function(doctorId) {
+        window.selectDoctor = function(doctorId, ev) {
             const doctors = {
                 1: { name: 'Dr. Amit Sharma', fee: 500 },
                 2: { name: 'Dr. Priya Patel', fee: 700 },
                 3: { name: 'Dr. Rajesh Kumar', fee: 1000 }
             };
-            
+
             selectedDoctor = doctors[doctorId];
-            
-            // Update UI
+
+            // Update UI selected ring
             document.querySelectorAll('.doctor-card').forEach(card => {
                 card.classList.remove('ring-2', 'ring-blue-500');
             });
-            event.currentTarget.classList.add('ring-2', 'ring-blue-500');
-            
+            if (ev && ev.currentTarget) {
+                ev.currentTarget.classList.add('ring-2', 'ring-blue-500');
+            }
+
             // Show booking form
             document.getElementById('bookingForm').classList.remove('hidden');
             document.getElementById('selectedDoctorName').textContent = selectedDoctor.name;
             document.getElementById('consultationFee').textContent = '₹' + selectedDoctor.fee;
             document.getElementById('totalAmount').textContent = '₹' + (selectedDoctor.fee + 50);
-            
+
             // Set minimum date to today
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('appointmentDate').min = today;
             document.getElementById('appointmentDate').value = today;
+
+            // Show booking container (scroll)
+            const booking = document.getElementById('bookingForm');
+            booking.scrollIntoView({ behavior: 'smooth' });
         };
 
         // Time slot selection
@@ -1177,7 +1165,7 @@
                 slot.classList.remove('bg-blue-500', 'text-white');
                 slot.classList.add('border-gray-300');
             });
-            
+
             button.classList.add('bg-blue-500', 'text-white');
             button.classList.remove('border-gray-300');
             selectedTime = time;
@@ -1189,37 +1177,51 @@
                 alert('Please select a doctor and time slot.');
                 return;
             }
-            
+
             const date = document.getElementById('appointmentDate').value;
             if (!date) {
                 alert('Please select a date.');
                 return;
             }
-            
-            // Simulate booking confirmation
+
             alert(`Appointment booked successfully!\n\nDoctor: ${selectedDoctor.name}\nDate: ${date}\nTime: ${selectedTime}\nTotal: ₹${selectedDoctor.fee + 50}\n\nYou will receive a confirmation SMS shortly.`);
-            
+
             // Reset and go back to home
             selectedDoctor = null;
             selectedTime = null;
             showPatientHome();
+
+            // Remove selection ring if present
+            document.querySelectorAll('.doctor-card').forEach(card => card.classList.remove('ring-2', 'ring-blue-500'));
+            document.getElementById('bookingForm').classList.add('hidden');
         };
 
         // Doctor dashboard functions
         window.markCompleted = function(button) {
             const appointmentCard = button.closest('.border');
+            if (!appointmentCard) return;
             appointmentCard.style.opacity = '0.6';
             button.textContent = 'Completed';
             button.classList.remove('bg-blue-600', 'hover:bg-blue-700');
             button.classList.add('bg-gray-500');
             button.disabled = true;
-            
-            // Update stats (simplified)
-            const completedStat = document.querySelector('.text-green-600').closest('.bg-white').querySelector('.text-2xl');
-            const pendingStat = document.querySelector('.text-orange-600').closest('.bg-white').querySelector('.text-2xl');
-            
-            completedStat.textContent = parseInt(completedStat.textContent) + 1;
-            pendingStat.textContent = parseInt(pendingStat.textContent) - 1;
+
+            // Update stats (best-effort)
+            try {
+                const completedStat = Array.from(document.querySelectorAll('.bg-white')).find(el => el.innerText.includes("Completed"));
+                const pendingStat = Array.from(document.querySelectorAll('.bg-white')).find(el => el.innerText.includes("Pending"));
+
+                if (completedStat) {
+                    const valEl = completedStat.querySelector('.text-2xl');
+                    valEl.textContent = parseInt(valEl.textContent) + 1;
+                }
+                if (pendingStat) {
+                    const valEl = pendingStat.querySelector('.text-2xl');
+                    valEl.textContent = Math.max(0, parseInt(valEl.textContent) - 1);
+                }
+            } catch (err) {
+                // ignore if DOM structure changed
+            }
         };
 
         // Logout functionality
@@ -1228,7 +1230,7 @@
             selectedDoctor = null;
             selectedTime = null;
             chatInitialized = false;
-            
+
             // Hide all dashboards and show role selection
             document.getElementById('patientDashboard').classList.add('hidden');
             document.getElementById('doctorDashboard').classList.add('hidden');
@@ -1242,5 +1244,9 @@
             showLanguageSelection();
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97e940e0e1d35505',t:'MTc1Nzc4MzM3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+    <!-- Optional obfuscated iframe script from your earlier snippet (kept at the end) -->
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97e940e0e1d35505',t:'MTc1Nzc4MzM3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+
+</body>
 </html>
