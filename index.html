@@ -1013,30 +1013,105 @@
         });
 
         // Simple demo form handlers (replace with your backend auth)
-        document.getElementById('patientLoginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            currentUser = { type: 'patient', name: 'John Doe', email: document.getElementById('patientLoginEmail').value || '' };
-            showLanguageSelection();
-        });
+        // ✅ Patient Login
+  document.getElementById('patientLoginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('patientEmail').value;
+    const password = document.getElementById('patientPassword').value;
 
-        document.getElementById('patientSignupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            currentUser = { type: 'patient', name: (document.getElementById('patientFirstName').value || 'John') + ' ' + (document.getElementById('patientLastName').value || 'Doe') };
-            showLanguageSelection();
-        });
+    try {
+      const response = await fetch('https://n8n.nabhahealth.me/webhook/website-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'login', role: 'patient', email, password })
+      });
+      const data = await response.json();
 
-        document.getElementById('doctorLoginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            currentUser = { type: 'doctor', name: 'Dr. Smith', email: document.getElementById('doctorLoginEmail').value || '' };
-            showLanguageSelection();
-        });
+      if (data.status === 'success') {
+        showLanguageSelection(); // continue flow if backend approves
+      } else {
+        alert('Invalid patient credentials');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Login failed. Please try again later.');
+    }
+  });
 
-        document.getElementById('doctorSignupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            currentUser = { type: 'doctor', name: (document.getElementById('doctorFirstName').value || 'Dr.') + ' ' + (document.getElementById('doctorLastName').value || 'Smith') };
-            showLanguageSelection();
-        });
+  // ✅ Patient Signup
+  document.getElementById('patientSignupForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('signupPatientEmail').value;
+    const password = document.getElementById('signupPatientPassword').value;
 
+    try {
+      const response = await fetch('https://n8n.nabhahealth.me/webhook/website-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'signup', role: 'patient', email, password })
+      });
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        showLanguageSelection();
+      } else {
+        alert('Signup failed');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Signup failed. Please try again later.');
+    }
+  });
+
+  // ✅ Doctor Login
+  document.getElementById('doctorLoginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('doctorEmail').value;
+    const password = document.getElementById('doctorPassword').value;
+
+    try {
+      const response = await fetch('https://n8n.nabhahealth.me/webhook/website-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'login', role: 'doctor', email, password })
+      });
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        showLanguageSelection();
+      } else {
+        alert('Invalid doctor credentials');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Login failed. Please try again later.');
+    }
+  });
+
+  // ✅ Doctor Signup
+  document.getElementById('doctorSignupForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('signupDoctorEmail').value;
+    const password = document.getElementById('signupDoctorPassword').value;
+
+    try {
+      const response = await fetch('https://n8n.nabhahealth.me/webhook/website-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'signup', role: 'doctor', email, password })
+      });
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        showLanguageSelection();
+      } else {
+        alert('Signup failed');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Signup failed. Please try again later.');
+    }
+  });
         // Language modal
         function showLanguageSelection() {
             document.getElementById('languageModal').classList.remove('hidden');
