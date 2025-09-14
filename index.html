@@ -986,62 +986,75 @@
             document.getElementById('authSection').classList.add('hidden');
             document.getElementById('roleSelection').classList.remove('hidden');
         };
-document.addEventListener('DOMContentLoaded', () => {
-  // ===== TAB SWITCHING =====
-  const loginTab = document.getElementById('loginTab');
-  const signupTab = document.getElementById('signupTab');
-  const patientLoginForm = document.getElementById('patientLoginForm');
-  const patientSignupForm = document.getElementById('patientSignupForm');
-  const doctorLoginForm = document.getElementById('doctorLoginForm');
-  const doctorSignupForm = document.getElementById('doctorSignupForm');
+ document.addEventListener("DOMContentLoaded", () => {
+      const loginTab = document.getElementById("loginTab");
+      const signupTab = document.getElementById("signupTab");
+      const loginForm = document.getElementById("loginForm");
+      const signupForm = document.getElementById("signupForm");
 
-  function showLogin() {
-    loginTab.classList.add('bg-white','shadow-sm','text-blue-600');
-    loginTab.classList.remove('text-gray-600');
-    signupTab.classList.remove('bg-white','shadow-sm','text-blue-600');
-    signupTab.classList.add('text-gray-600');
-    patientLoginForm.classList.remove('hidden');
-    doctorLoginForm.classList.remove('hidden');
-    patientSignupForm.classList.add('hidden');
-    doctorSignupForm.classList.add('hidden');
-  }
+      // Toggle buttons
+      loginTab.addEventListener("click", () => {
+        loginTab.classList.add("bg-white", "text-blue-600", "shadow-sm");
+        signupTab.classList.remove("bg-white", "text-blue-600", "shadow-sm");
+        signupTab.classList.add("text-gray-600");
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+      });
 
-  function showSignup() {
-    signupTab.classList.add('bg-white','shadow-sm','text-blue-600');
-    signupTab.classList.remove('text-gray-600');
-    loginTab.classList.remove('bg-white','shadow-sm','text-blue-600');
-    loginTab.classList.add('text-gray-600');
-    patientLoginForm.classList.add('hidden');
-    doctorLoginForm.classList.add('hidden');
-    patientSignupForm.classList.remove('hidden');
-    doctorSignupForm.classList.remove('hidden');
-  }
+      signupTab.addEventListener("click", () => {
+        signupTab.classList.add("bg-white", "text-blue-600", "shadow-sm");
+        loginTab.classList.remove("bg-white", "text-blue-600", "shadow-sm");
+        loginTab.classList.add("text-gray-600");
+        signupForm.classList.remove("hidden");
+        loginForm.classList.add("hidden");
+      });
 
-  loginTab.addEventListener('click', showLogin);
-  signupTab.addEventListener('click', showSignup);
+      // Handle form submissions (simulate success)
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Login form submitted!");
+      });
 
-  // ===== MOCK LOGIN/SIGN-UP (No backend) =====
-  function mockSubmit(e, userType, action) {
-    e.preventDefault();
-    console.log(`${action} for ${userType} triggered`);
-    alert(`${userType} ${action} successful (simulated)`);
-    showLanguageSelection();
-  }
+      signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Signup form submitted!");
+      });
+    });
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
 
-  // Attach handlers for all forms
-  patientLoginForm.addEventListener('submit', e => mockSubmit(e,'Patient','login'));
-  patientSignupForm.addEventListener('submit', e => mockSubmit(e,'Patient','signup'));
-  doctorLoginForm.addEventListener('submit', e => mockSubmit(e,'Doctor','login'));
-  doctorSignupForm.addEventListener('submit', e => mockSubmit(e,'Doctor','signup'));
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+    <!-- Login/Signup Toggle -->
+    <div class="flex bg-gray-100 rounded-lg p-1 mb-6">
+      <button id="loginTab" class="flex-1 py-2 px-4 rounded-md bg-white shadow-sm text-blue-600 font-medium transition-all">
+        Login
+      </button>
+      <button id="signupTab" class="flex-1 py-2 px-4 rounded-md text-gray-600 font-medium transition-all">
+        Sign Up
+      </button>
+    </div>
 
-  // ===== Dummy function for next step =====
-  function showLanguageSelection() {
-    // Replace this with your real navigation or UI code
-    console.log('Navigating to language selection…');
-    alert('Now go to language selection page (simulated)');
-  }
-}); 
-        
+    <!-- Login Form -->
+    <form id="loginForm">
+      <input type="text" placeholder="Username" class="w-full mb-3 p-2 border rounded" />
+      <input type="password" placeholder="Password" class="w-full mb-3 p-2 border rounded" />
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        Login
+      </button>
+    </form>
+
+    <!-- Signup Form -->
+    <form id="signupForm" class="hidden">
+      <input type="text" placeholder="Username" class="w-full mb-3 p-2 border rounded" />
+      <input type="email" placeholder="Email" class="w-full mb-3 p-2 border rounded" />
+      <input type="password" placeholder="Password" class="w-full mb-3 p-2 border rounded" />
+      <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+        Sign Up
+      </button>
+    </form>
+  </div>    
         // Language modal
         function showLanguageSelection() {
             document.getElementById('languageModal').classList.remove('hidden');
