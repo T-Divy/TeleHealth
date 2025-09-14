@@ -986,88 +986,63 @@
             document.getElementById('authSection').classList.add('hidden');
             document.getElementById('roleSelection').classList.remove('hidden');
         };
+document.addEventListener('DOMContentLoaded', () => {
+  // ===== TAB SWITCHING =====
+  const loginTab = document.getElementById('loginTab');
+  const signupTab = document.getElementById('signupTab');
+  const patientLoginForm = document.getElementById('patientLoginForm');
+  const patientSignupForm = document.getElementById('patientSignupForm');
+  const doctorLoginForm = document.getElementById('doctorLoginForm');
+  const doctorSignupForm = document.getElementById('doctorSignupForm');
 
-        // Tab switching
-        document.getElementById('loginTab').addEventListener('click', function() {
-            this.classList.add('bg-white', 'shadow-sm', 'text-blue-600');
-            this.classList.remove('text-gray-600');
-            document.getElementById('signupTab').classList.remove('bg-white', 'shadow-sm', 'text-blue-600');
-            document.getElementById('signupTab').classList.add('text-gray-600');
+  function showLogin() {
+    loginTab.classList.add('bg-white','shadow-sm','text-blue-600');
+    loginTab.classList.remove('text-gray-600');
+    signupTab.classList.remove('bg-white','shadow-sm','text-blue-600');
+    signupTab.classList.add('text-gray-600');
+    patientLoginForm.classList.remove('hidden');
+    doctorLoginForm.classList.remove('hidden');
+    patientSignupForm.classList.add('hidden');
+    doctorSignupForm.classList.add('hidden');
+  }
 
-            document.getElementById('patientLoginForm').classList.remove('hidden');
-            document.getElementById('patientSignupForm').classList.add('hidden');
-            document.getElementById('doctorLoginForm').classList.remove('hidden');
-            document.getElementById('doctorSignupForm').classList.add('hidden');
-        });
+  function showSignup() {
+    signupTab.classList.add('bg-white','shadow-sm','text-blue-600');
+    signupTab.classList.remove('text-gray-600');
+    loginTab.classList.remove('bg-white','shadow-sm','text-blue-600');
+    loginTab.classList.add('text-gray-600');
+    patientLoginForm.classList.add('hidden');
+    doctorLoginForm.classList.add('hidden');
+    patientSignupForm.classList.remove('hidden');
+    doctorSignupForm.classList.remove('hidden');
+  }
 
-        document.getElementById('signupTab').addEventListener('click', function() {
-            this.classList.add('bg-white', 'shadow-sm', 'text-blue-600');
-            this.classList.remove('text-gray-600');
-            document.getElementById('loginTab').classList.remove('bg-white', 'shadow-sm', 'text-blue-600');
-            document.getElementById('loginTab').classList.add('text-gray-600');
+  loginTab.addEventListener('click', showLogin);
+  signupTab.addEventListener('click', showSignup);
 
-            document.getElementById('patientLoginForm').classList.add('hidden');
-            document.getElementById('patientSignupForm').classList.remove('hidden');
-            document.getElementById('doctorLoginForm').classList.add('hidden');
-            document.getElementById('doctorSignupForm').classList.remove('hidden');
-        });
+  // ===== MOCK LOGIN/SIGN-UP (No backend) =====
+  function mockSubmit(e, userType, action) {
+    e.preventDefault();
+    console.log(`${action} for ${userType} triggered`);
+    alert(`${userType} ${action} successful (simulated)`);
+    showLanguageSelection();
+  }
 
-        // Simple demo form handlers (rconst WEBHOOK_URL = 'https://n8n.nabhahealth.me/webhook/website-form';
+  // Attach handlers for all forms
+  patientLoginForm.addEventListener('submit', e => mockSubmit(e,'Patient','login'));
+  patientSignupForm.addEventListener('submit', e => mockSubmit(e,'Patient','signup'));
+  doctorLoginForm.addEventListener('submit', e => mockSubmit(e,'Doctor','login'));
+  doctorSignupForm.addEventListener('submit', e => mockSubmit(e,'Doctor','signup'));
 
-    // 🟢 HANDLERS
-    async function handleSubmit(role, action, email, password) {
-      try {
-        const res = await fetch(WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action, role, email, password })
-        });
-        const data = await res.json();
-        console.log(data);
-        if (data.status === 'success') {
-          alert(`${role} ${action} successful!`);
-          // TODO: redirect or show next step
-          // window.location.href = '/dashboard.html';
-        } else {
-          alert(data.message || `${action} failed`);
-        }
-      } catch (err) {
-        console.error(err);
-        alert('Request failed. Check console for details.');
-      }
-    }
-
-    // 🧑‍⚕️ PATIENT LOGIN
-    patientLoginForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const email = document.getElementById('patientEmail').value;
-      const password = document.getElementById('patientPassword').value;
-      handleSubmit('patient', 'login', email, password);
-    });
-
-    // 🧑‍⚕️ PATIENT SIGNUP
-    patientSignupForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const email = document.getElementById('signupPatientEmail').value;
-      const password = document.getElementById('signupPatientPassword').value;
-      handleSubmit('patient', 'signup', email, password);
-    });
-
-    // 👨‍⚕️ DOCTOR LOGIN
-    doctorLoginForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const email = document.getElementById('doctorEmail').value;
-      const password = document.getElementById('doctorPassword').value;
-      handleSubmit('doctor', 'login', email, password);
-    });
-
-    // 👨‍⚕️ DOCTOR SIGNUP
-    doctorSignupForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const email = document.getElementById('signupDoctorEmail').value;
-      const password = document.getElementById('signupDoctorPassword').value;
-      handleSubmit('doctor', 'signup', email, password);
-    }); // Language modal
+  // ===== Dummy function for next step =====
+  function showLanguageSelection() {
+    // Replace this with your real navigation or UI code
+    console.log('Navigating to language selection…');
+    alert('Now go to language selection page (simulated)');
+  }
+}); 
+        
+        // Language modal
         function showLanguageSelection() {
             document.getElementById('languageModal').classList.remove('hidden');
         }
