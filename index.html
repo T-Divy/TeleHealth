@@ -1064,12 +1064,55 @@
         }
         
         // Language selection
-        window.selectLanguage = function(lang) {
-            document.getElementById('languageModal').classList.add('hidden');
-            document.getElementById('languageSelector').value = lang;
-            // Here you would implement actual language switching
-            console.log('Language selected:', lang);
+            // Define translations for your app
+        const translations = {
+        en: {
+            symptomsLabel: "Describe Your Symptoms",
+            analyze: "Analyze Symptoms",
+            appointmentTitle: "Book Your Appointment",
+            selectDate: "Preferred Date",
+            confirmBooking: "Confirm Payment & Book",
+            // add all other text keys here
+        },
+        hi: {
+            symptomsLabel: "अपने लक्षणों का वर्णन करें",
+            analyze: "लक्षण विश्लेषण करें",
+            appointmentTitle: "अपॉइंटमेंट बुक करें",
+            selectDate: "पसंदीदा तारीख",
+            confirmBooking: "भुगतान और बुकिंग की पुष्टि करें",
+            // add all other text keys here
+        },
+        pa: {
+            symptomsLabel: "ਆਪਣੇ ਲੱਛਣਾਂ ਦਾ ਵਰਣਨ ਕਰੋ",
+            analyze: "ਲੱਛਣ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰੋ",
+            appointmentTitle: "ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਕਰੋ",
+            selectDate: "ਪਸੰਦੀਦਾ ਤਾਰੀਖ",
+            confirmBooking: "ਭੁਗਤਾਨ ਅਤੇ ਬੁਕਿੰਗ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+            // add all other text keys here
+        }
         };
+        
+        // Function to change language dynamically
+        function changeLanguage(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                el.textContent = translations[lang][key];
+            }
+        });
+        }
+
+// Updated selectLanguage function
+window.selectLanguage = function(lang) {
+    document.getElementById('languageModal').classList.add('hidden');
+    document.getElementById('languageSelector').value = lang;
+    
+    // Change all page text to selected language
+    changeLanguage(lang);
+
+    console.log('Language selected:', lang);
+};
+
         
         // Authentication tab switching
         document.getElementById('patientLoginTab').addEventListener('click', function() {
